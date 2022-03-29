@@ -2,13 +2,13 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const createBlogPosts = await queryInterface.createTable('BlogPosts', {
+    const createPostsCategories = await queryInterface.createTable('PostsCategories', {
       postId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         references: {
-          model: 'PostsCategories',
+          model: 'BlogPosts',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('BlogPosts');
+    await queryInterface.dropTable('PostCategories');
   }
 };

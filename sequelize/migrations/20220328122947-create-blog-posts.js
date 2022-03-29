@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const createPostsCategories = await queryInterface.createTable('PostsCategories', {
+    const createBlogPosts = await queryInterface.createTable('BlogPosts', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -11,17 +11,17 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING,
-        unique: true,
+        // unique: true,
         allowNull: false
       },
       content: {
         type: Sequelize.STRING,
-        unique: true,
+        // unique: true,
         allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
-        unique: true,
+        // unique: true,
         allowNull: false,
         references: {
           model: 'Users',
@@ -32,30 +32,20 @@ module.exports = {
       },
       published: {
         type: Sequelize.DATE,
-        unique: true,
+        // unique: true,
         allowNull: false,
         foreignKey: true,
       },
       updated: {
         type: Sequelize.DATE,
-        unique: true,
+        // unique: true,
         allowNull: false,
         foreignKey: true,
       },
-
     });
-
-// { 
-//   "id": 21,
-//   "title": "Latest updates, August 1st",
-//   "content": "The whole text for the blog post goes here in this key",
-//   "userId": 14, // esse é o id que referência usuário que é o autor do post
-//   "published": "2011-08-01T19:58:00.000Z",
-//   "updated": "2011-08-01T19:58:51.947Z",
-// }
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('PostsCategories');
+    await queryInterface.dropTable('BlogPosts');
   }
 };
