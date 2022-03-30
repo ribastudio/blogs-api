@@ -7,40 +7,33 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
-        // autoIncrement: true
+        autoIncrement: true
       },
       title: {
         type: Sequelize.STRING,
-        // unique: true,
         allowNull: false
       },
       content: {
         type: Sequelize.STRING,
-        // unique: true,
         allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
-        // unique: true,
-        allowNull: false,
+        // allowNull: false,
         references: {
           model: 'Users',
           key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'SET NULL'
       },
       published: {
         type: Sequelize.DATE,
-        // unique: true,
         allowNull: false,
-        foreignKey: true,
       },
       updated: {
         type: Sequelize.DATE,
-        // unique: true,
         allowNull: false,
-        foreignKey: true,
       },
     });
   },
