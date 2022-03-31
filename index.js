@@ -1,16 +1,19 @@
 const express = require('express');
 
 const bodyParser = require('body-parser');
-const  = require('./routes/productRoutes');
-const  = require('./routes/salesRoutes');
+const userRouter = require('./routes/userRoutes');
+const loginRouter = require('./routes/loginRouter');
+const middlewareError = require('./middlewares/errorTreatment');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
 
 app.use('/login', loginRouter);
-app.use('/posts', postRouter);
-app.use('/category', categoryRouter);
+app.use('/user', userRouter);
+// app.use('/posts', postRouter);
+// app.use('/category', categoryRouter);
+app.use(middlewareError);
 
 app.listen(3000, () => console.log('ouvindo porta 3000'));
 
