@@ -1,12 +1,15 @@
 const express = require('express');
 
-const { addUser } = require('../controllers/userController');
+const { verifyLoginFieldIsRequired,
+  verifyLoginFieldIsEmpty } = require('../middlewares/validate');
+
+const { login } = require('../controllers/loginController');
 
 const router = express.Router();
 
 // router.get('/', listUser);
 // router.post('/', );
-router.get('/', addUser);
+router.post('/', verifyLoginFieldIsRequired, verifyLoginFieldIsEmpty, login);
 // router.delete('/', );
 
 module.exports = router;

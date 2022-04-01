@@ -1,30 +1,11 @@
-// dica do Renato Bispo, 15A
-const {
-  ENTITY_ALREADY_EXISTS,
-  ENTITY_FAILED,
-  INVALID_PROPERTY,
-} = require('../helpers/errorMessage');
+// dica do Renato Bispo, 15A;
+// dica do Zambs para refatorar o switch em notação de objeto;
+const errorMessages = require('../helpers/errorMessages');
 
 module.exports = (error, _req, res, _next) => {
-  let statusCode = null;
-  console.log(error.code);
-  switch (error.code) {
-    case ENTITY_FAILED:
-      statusCode = 404;
-      break;
-
-    case ENTITY_ALREADY_EXISTS:
-      statusCode = 404;
-      break;
-
-    case INVALID_PROPERTY:
-      statusCode = 400;
-      break;
+  const statusCode = errorMessages[error.code] || 500;
   
-    default:
-      statusCode = 500;
-      break;
-  }
-
   return res.status(statusCode).json({ message: error.message });
 };
+
+// para chegar aqui é passado uma string para ser traduzida em código http, para não ferir o principio do msc, com a individualidade das camadas. o código http só é traduzido na linha 6 em código(number)

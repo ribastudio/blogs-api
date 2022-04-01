@@ -1,13 +1,18 @@
-const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const CustomError = require('../helpers/customError');
+const { User } = require('../models');
 
 const jwtConfig = {
   expiresIn: '15m',
   algorithm: 'HS256',
 };
 
-const login = async (userData) => {
-  let user = await User();
+const makeLogin = async (userData) => {
+  const user = await User.findOne({ where: { email: userData.email } });
+
+  if (!user || user.email !== userData.email) {
+    throw new CustomError('INVALID_FIELDS', 'Invalid fields');
+  }
 
   const { password, ...userWithouthPassword } = user;
 
@@ -17,5 +22,5 @@ const login = async (userData) => {
 };
 
 module.exports = {
-  login,
+  makeLogin,
 };

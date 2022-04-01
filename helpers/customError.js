@@ -8,9 +8,10 @@ module.exports = class CustomError extends Error {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, CustomError);
     }
-
+    
     this.name = `CustomError ${code}`;
     // Custom debugging information
+    console.log('dentro da classe', typeof code, code);
     this.code = code;
   }
 };
