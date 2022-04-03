@@ -1,26 +1,27 @@
 const jwt = require('jsonwebtoken');
 const CustomError = require('../helpers/customError');
-const { User } = require('../models');
 
 const jwtConfig = {
   expiresIn: '15m',
   algorithm: 'HS256',
 };
 
-const makeLogin = async (userData) => {
-  const user = await User.findOne({ where: { email: userData.email } });
+const genAuthToken = async (userData) => {
+  const { id, email } = userData;
+  const token = jwt.sign({ data: { id, email } }, process.env.JWT_SECRET, jwtConfig);
+  return token;
+};
 
-  if (!user || user.email !== userData.email) {
-    throw new CustomError('INVALID_FIELDS', 'Invalid fields');
+const verifyAuth = async (authorization) => {
+  try {
+    const auth = jwt.verify(authorization, process.env.JWT_SECRET);
+    return auth;
+  } catch (error) {
+    throw new CustomError('INVALID_AUTH', 'Expired or invalid token');
   }
-
-  const { password, ...userWithouthPassword } = user;
-
-  const token = jwt.sign({ data: userWithouthPassword }, process.env.JWT_SECRET, jwtConfig);
-
-  return { token };
 };
 
 module.exports = {
-  makeLogin,
+  genAuthToken,
+  verifyAuth,
 };

@@ -1,27 +1,40 @@
 // const CustomError = require('../helpers/customError');
 // const { ENTITY_FAILED } = require('../helpers/errorMessages');
+const CustomError = require('../helpers/customError');
 const { User } = require('../models');
 // const userSchema = require('../schemas/userSchema');
 
 const addUser = async (userData) => {
   const { displayName, email, password, image } = userData;
-  
-  // if (displayName === 'ribamarjose') {
-  //   throw new CustomError('ENTITY_FAILED', 'User already registered');
-  // }
-  
-  const result = await User.create({ displayName, email, password, image });
+
+  const ifUserExists = await User.findOne({ where: { email: userData.email } });
+    
+  if (ifUserExists) {
+    throw new CustomError('USER_EXISTS', 'User already registered');
+  }
  
+  const result = await User.create({ displayName, email, password, image });
+  // verificar erro do sequelize, que não retorna erro para o controller se o nome já existir.
   return { result };
 };
 
-const listUser = async () => {
-  const result = await User.listAll();
+const ifUserExists = async (userData) => {
+  const user = await User.findOne({ where: { email: userData.email } });
+  console.log('user dentro do genAuthToken', user);
 
-  return { result };
+  if (!user || user.email !== userData.email) {
+    throw new CustomError('INVALID_FIELDS', 'Invalid fields');
+  }
+};
+
+const listUser = async () => {
+  const result = await User.findAll();
+  console.log(result);
+  return result;
 };
 
 module.exports = {
   addUser,
+  ifUserExists,
   listUser,
 };
