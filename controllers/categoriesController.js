@@ -13,6 +13,27 @@ const createCategory = async (req, res, next) => {
   }
 };
 
+const listCategory = async (_req, res, next) => {
+  try {
+    const result = await categoriesService.listAllCategories();
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const listCategoryById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const result = await categoriesService.listCategoryById(id);
+    return res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createCategory,
+  listCategory,
+  listCategoryById,
 };

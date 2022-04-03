@@ -4,12 +4,14 @@ const express = require('express');
 
 const auth = require('../middlewares/authLogin');
 
-const { createCategory } = require('../controllers/categoriesController');
+const { createCategory,
+        listCategory,
+        listCategoryById } = require('../controllers/categoriesController');
 
 const router = express.Router();
 
-// router.get('/', auth, listUser);
-// router.get('/:id', auth, listUserById);
+router.get('/', auth, listCategory);
+router.get('/:id', auth, listCategoryById);
 // router.post('/', );
 router.post('/', auth, createCategory);
 // router.delete('/', );
