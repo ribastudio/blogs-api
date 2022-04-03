@@ -12,5 +12,5 @@ const userSchema = Joi.object({
 module.exports = {
   userSchema,
 };
-
+ 
 //  posição 0 do array do joi type 
