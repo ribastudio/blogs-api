@@ -33,8 +33,17 @@ const listUser = async () => {
   return result;
 };
 
+const listUserById = async (id) => {
+  const result = await User.findByPk(id);
+  if (!result) {
+    throw new CustomError('ENTITY_FAILED', 'User does not exist');
+  }
+  return result;
+};
+
 module.exports = {
   addUser,
   ifUserExists,
   listUser,
+  listUserById,
 };

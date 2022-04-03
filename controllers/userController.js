@@ -19,7 +19,7 @@ const addUser = async (req, res, next) => {
   }
 };
 
-const listUser = async (req, res, next) => {
+const listUser = async (_req, res, next) => {
   // const { displayName, email, password, image } = req.body;
   try {
     const userList = await userService.listUser();
@@ -29,7 +29,18 @@ const listUser = async (req, res, next) => {
   }
 };
 
+const listUserById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const userList = await userService.listUserById(id);
+    return res.status(200).json(userList);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   addUser,
   listUser,
+  listUserById,
 };
