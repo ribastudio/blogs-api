@@ -12,10 +12,10 @@ const authentication = async (req, _res, next) => {
     const result = await loginService.verifyIfHaveAToken(authorization);
     console.log(result);
     const loginData = await loginService.verifyAuth(authorization);
-    const user = loginData.data.email;
+    const user = loginData;
     
     req.user = user;
-    
+    console.log('user', user);
     next();
   } catch (error) {
     next(error);
