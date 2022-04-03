@@ -5,8 +5,6 @@ const addUser = async (req, res, next) => {
   const { displayName, email, password, image } = req.body;
   
   try {
-    console.log(displayName, email, password, image);
-       
     const createdUser = await userService.addUser({ displayName, email, password, image });
     console.log('passou do sequelize', createdUser);
     
