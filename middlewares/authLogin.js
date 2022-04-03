@@ -1,25 +1,25 @@
 const loginService = require('../services/loginService');
 const CustomError = require('../helpers/customError');
 
-const authentication = async (req, res, next) => {
-  const { authorization } = req.header;
-  
-  if (!authorization) {
-    throw new CustomError('INVALID_AUTH', 'Token not found');
-  }
+const authentication = async (req, _res, next) => {
+  const { authorization } = req.headers;
+  console.log(authorization);
 
   try {
+    if (!authorization) {
+      throw new CustomError('INVALID_AUTH', 'Token not found');
+    }
+    const result = await loginService.verifyIfHaveAToken(authorization);
+    console.log(result);
     const loginData = await loginService.verifyAuth(authorization);
     const user = loginData.data.email;
     
     req.user = user;
     
-    return res.status(200).json({ message: loginData.token });
+    next();
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = {
-  authentication,
-};
+module.exports = authentication;

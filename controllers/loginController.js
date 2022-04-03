@@ -6,8 +6,10 @@ const login = async (req, res, next) => {
   
   try {
     await userService.ifUserExists({ email });
+    console.log('antes de gerar o token');
     const loginData = await loginService.genAuthToken({ email, password });
-    return res.status(200).json({ token: loginData.token });
+    console.log('depois de gerar o token', loginData);
+    return res.status(200).json({ token: loginData });
   } catch (error) {
     next(error);
   }
