@@ -21,8 +21,14 @@ const listCategoryById = async (id) => {
   return { result };
 };
 
+const listArrayCategoryById = async (array) => {
+  const result = await Category.findAll({ where: { id: array } });
+  return result;
+};
+
 module.exports = {
   createCategory,
   listAllCategories,
   listCategoryById,
+  listArrayCategoryById,
 };

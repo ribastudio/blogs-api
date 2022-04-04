@@ -13,7 +13,6 @@ const router = express.Router();
 
 router.get('/', auth, listUser);
 router.get('/:id', auth, listUserById);
-// router.post('/', );
 router.post('/', verifyUser, addUser);
 router.delete('/me', auth, deleteUser);
 
