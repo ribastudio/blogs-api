@@ -1,4 +1,4 @@
-const { createBlogPosts, listAllPosts } = require('../services/postService');
+const postService = require('../services/postService');
 // const {} = require('../services/categoryService');
 
 const createBlogPost = async (req, res, next) => {
@@ -6,7 +6,7 @@ const createBlogPost = async (req, res, next) => {
   const { email } = req.user.data;
 
   try {
-    const result = await createBlogPosts(title, content, categoryIds, email);
+    const result = await postService.createBlogPosts(title, content, categoryIds, email);
     return res.status(201).json(result);
   } catch (error) {
     next(error); 
@@ -15,8 +15,19 @@ const createBlogPost = async (req, res, next) => {
 
 const listAllPost = async (req, res, next) => {
   try {
-    const result = await listAllPosts();
+    const result = await postService.listAllPosts();
 
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const listPostsById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const result = await postService.listPostsById(id);
+    
     return res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -26,4 +37,5 @@ const listAllPost = async (req, res, next) => {
 module.exports = {
   createBlogPost,
   listAllPost,
+  listPostsById,
 };

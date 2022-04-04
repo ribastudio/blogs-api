@@ -1,6 +1,6 @@
 const { BlogPost, User, PostCategory, Category } = require('../models');
 // const { listArrayCategoryById } = require('./categoryService');
-// const CustomError = require('../helpers/customError');
+const CustomError = require('../helpers/customError');
 
 const connectPostAndCategory = async (postId, categoriesIds) => categoriesIds
     .map((categoryId) => (
@@ -38,7 +38,25 @@ const listAllPosts = async () => {
   return listOfAllPosts;
 };
 
+const listPostsById = async (id) => {
+  const postById = await BlogPost.findOne(
+    { where: { id },
+      include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', attributes: ['id', 'name'] },
+     ],
+    },
+  );
+  
+  if (!postById) {
+    throw new CustomError('ENTITY_FAILED', 'Post does not exist');
+  }
+
+  return postById;
+};
+
 module.exports = {
   createBlogPosts,
   listAllPosts,
+  listPostsById,
 };
