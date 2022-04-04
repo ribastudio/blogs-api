@@ -1,6 +1,9 @@
 const express = require('express');
 
-const { createBlogPost, listAllPost, listPostsById } = require('../controllers/postController.js');
+const { createBlogPost, 
+        listAllPost,
+        listPostsById,
+        updatePost } = require('../controllers/postController.js');
 
 const { verifyPost, verifyCategories } = require('../middlewares/validate');
 
@@ -10,7 +13,7 @@ const router = express.Router();
 
 router.get('/', auth, listAllPost);
 router.get('/:id', auth, listPostsById);
-// router.post('/', );
+router.put('/:id', auth, updatePost);
 router.post('/', auth, verifyPost, verifyCategories, createBlogPost);
 // router.delete('/', );
 

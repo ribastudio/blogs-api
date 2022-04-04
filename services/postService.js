@@ -55,8 +55,28 @@ const listPostsById = async (id) => {
   return postById;
 };
 
+const updatePost = async (id, title, content) => {
+  try {
+    await BlogPost.update({ title, content }, { where: { id } });
+    
+    const findId = await BlogPost.findOne({ where: { id },
+      include: [
+        { model: Category,
+          as: 'categories', 
+          attributes: ['id', 'name'],
+        },
+      ],
+      attributes: { exclude: ['published', 'updated'] },
+    });
+    return findId;
+  } catch (error) {
+    return error;
+  }  
+};
+
 module.exports = {
   createBlogPosts,
   listAllPosts,
   listPostsById,
+  updatePost,
 };
