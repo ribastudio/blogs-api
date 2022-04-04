@@ -78,10 +78,24 @@ const verifyCategories = async (req, _res, next) => {
   }
 };
 
+// https://dmitripavlutin.com/check-if-object-has-property-javascript/
+const verifyIfHaveCategory = async (req, _res, next) => {
+  const { body } = req;
+  try {
+    if ('categoryIds' in body) {
+      throw new CustomError('INVALID_PROPERTY', 'Categories cannot be edited');
+    } 
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   verifyUser,
   verifyLoginFieldIsRequired,
   verifyLoginFieldIsEmpty,
   verifyPost,
   verifyCategories,
+  verifyIfHaveCategory,
 };

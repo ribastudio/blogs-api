@@ -1,3 +1,4 @@
+const CustomError = require('../helpers/customError');
 const postService = require('../services/postService');
 // const {} = require('../services/categoryService');
 
@@ -37,8 +38,10 @@ const listPostsById = async (req, res, next) => {
 const updatePost = async (req, res, next) => {
   const { id } = req.params;
   const { title, content } = req.body;
+  const { email } = req.user.data;
 
   try {
+    await postService.verifyAuthors(email, id);
     const result = await postService.updatePost(id, title, content);
 
     return res.status(200).json(result);

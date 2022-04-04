@@ -55,7 +55,17 @@ const listPostsById = async (id) => {
   return postById;
 };
 
-const updatePost = async (id, title, content) => {
+const verifyAuthors = async (email, id) => {
+  const verifyAuthor = await BlogPost.findOne({ where: { id } });
+  const { dataValues } = await User.findOne({ where: { email } });
+
+  if (verifyAuthor.id !== dataValues.id) {
+    throw new CustomError('INVALID_AUTH', 'Unauthorized user');
+  }
+  return null;
+};
+
+const updatePost = async (id, title, content) => {  
   try {
     await BlogPost.update({ title, content }, { where: { id } });
     
@@ -66,7 +76,7 @@ const updatePost = async (id, title, content) => {
           attributes: ['id', 'name'],
         },
       ],
-      attributes: { exclude: ['published', 'updated'] },
+      attributes: { exclude: ['id', 'published', 'updated'] },
     });
     return findId;
   } catch (error) {
@@ -79,4 +89,5 @@ module.exports = {
   listAllPosts,
   listPostsById,
   updatePost,
+  verifyAuthors,
 };
