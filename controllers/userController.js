@@ -18,7 +18,6 @@ const addUser = async (req, res, next) => {
 };
 
 const listUser = async (_req, res, next) => {
-  // const { displayName, email, password, image } = req.body;
   try {
     const userList = await userService.listUser();
     return res.status(200).json(userList);

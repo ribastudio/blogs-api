@@ -1,7 +1,5 @@
-// const CustomError = require('../helpers/customError');
 const CustomError = require('../helpers/customError');
 const postService = require('../services/postService');
-// const {} = require('../services/categoryService');
 
 const createBlogPost = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
@@ -54,9 +52,6 @@ const updatePost = async (req, res, next) => {
 const deletePost = async (req, res, next) => {
   const { id } = req.params;
   const { email } = req.user.data;
-
-  console.log('id do controller', id);
-  console.log('email do usuario', email);
 
   try {
     await postService.verifyAuthors(email, id);

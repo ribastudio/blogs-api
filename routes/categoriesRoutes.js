@@ -14,6 +14,5 @@ router.get('/', auth, listCategory);
 router.get('/:id', auth, listCategoryById);
 // router.post('/', );
 router.post('/', auth, createCategory);
-// router.delete('/', );
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const { BlogPost, User, PostCategory, Category } = require('../models');
-// const { listArrayCategoryById } = require('./categoryService');
 const CustomError = require('../helpers/customError');
 
 const connectPostAndCategory = async (postId, categoriesIds) => categoriesIds

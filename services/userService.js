@@ -1,8 +1,5 @@
-// const CustomError = require('../helpers/customError');
-// const { ENTITY_FAILED } = require('../helpers/errorMessages');
 const CustomError = require('../helpers/customError');
 const { User } = require('../models');
-// const userSchema = require('../schemas/userSchema');
 
 const addUser = async (userData) => {
   const { displayName, email, password, image } = userData;
