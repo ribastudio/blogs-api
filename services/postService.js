@@ -56,10 +56,17 @@ const listPostsById = async (id) => {
 };
 
 const verifyAuthors = async (email, id) => {
-  const verifyAuthor = await BlogPost.findOne({ where: { id } });
   const { dataValues } = await User.findOne({ where: { email } });
+  const verifyAuthor = await BlogPost.findOne({ where: { id } });
 
-  if (verifyAuthor.id !== dataValues.id) {
+  if (!verifyAuthor) {
+    throw new CustomError('ENTITY_FAILED', 'Post does not exist');
+  }
+
+  console.log('verifyAuthor', verifyAuthor.dataValues.userId);
+  console.log('dataValues', dataValues);
+
+  if (verifyAuthor.dataValues.userId !== dataValues.id) {
     throw new CustomError('INVALID_AUTH', 'Unauthorized user');
   }
   return null;
@@ -84,10 +91,25 @@ const updatePost = async (id, title, content) => {
   }  
 };
 
+const deletePosts = async (id) => {
+  const postToDelete = await BlogPost.findOne({ where: { id } });
+
+  console.log('resultado do find one do post a ser deletado', postToDelete);
+
+  if (!postToDelete) {
+    throw new CustomError('ENTITY_FAILED', 'Post does not exist');
+  }
+
+  await BlogPost.destroy({ where: { id } });
+
+  return 'SUCCESS';
+};
+
 module.exports = {
   createBlogPosts,
   listAllPosts,
   listPostsById,
   updatePost,
   verifyAuthors,
+  deletePosts,
 };
