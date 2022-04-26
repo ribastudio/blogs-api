@@ -67,10 +67,30 @@ const deletePost = async (req, res, next) => {
   }
 };
 
+const searchPostContent = async (req, res, next) => {
+  console.log(req.queryParam);
+  try {
+    if (!req.queryParam) {
+      const resultAll = await postService.listAllPosts();
+      return res.status(200).json(resultAll);
+    }
+
+    if (req.queryParam === '') {
+      return res.status(200).json([]);
+    }
+
+    const searchResults = await postService.searchAtPosts();
+    return res.status(201).json(searchResults);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createBlogPost,
   listAllPost,
   listPostsById,
   updatePost,
   deletePost,
+  searchPostContent,
 };

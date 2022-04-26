@@ -104,6 +104,11 @@ const deletePosts = async (id) => {
   return 'SUCCESS';
 };
 
+const searchAtPosts = async () => {
+  const result = await BlogPost.og();
+  return result;
+};
+
 module.exports = {
   createBlogPosts,
   listAllPosts,
@@ -111,4 +116,5 @@ module.exports = {
   updatePost,
   verifyAuthors,
   deletePosts,
+  searchAtPosts,
 };

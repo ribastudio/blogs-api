@@ -4,7 +4,8 @@ const { createBlogPost,
         listAllPost,
         listPostsById,
         updatePost,
-        deletePost } = require('../controllers/postController.js');
+        deletePost,
+        searchPostContent } = require('../controllers/postController.js');
 
 const { verifyPost, verifyCategories, verifyIfHaveCategory } = require('../middlewares/validate');
 
@@ -13,6 +14,7 @@ const auth = require('../middlewares/authLogin');
 const router = express.Router();
 
 router.get('/', auth, listAllPost);
+router.get('/search', auth, searchPostContent);
 router.get('/:id', auth, listPostsById);
 router.put('/:id', auth, verifyPost, verifyIfHaveCategory, updatePost);
 router.post('/', auth, verifyPost, verifyCategories, createBlogPost);
