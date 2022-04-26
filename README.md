@@ -77,10 +77,10 @@ $ git clone https://github.com/ribastudio/blogs-api
 $ cd blogs-api
 
 # Install dependencies
-$ yarn
+$ npm install
 
 # Run the project
-$ yarn start
+$ npm start
 
 # The server will initialize in the <http://localhost:3000>
 ```
